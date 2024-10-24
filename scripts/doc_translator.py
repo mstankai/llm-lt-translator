@@ -215,9 +215,13 @@ def main():
     n_input_tokens = get_number_of_tokens(messages, model_name)
     input_cost = get_cost_of_tokens(n_input_tokens, model_name, price_list, is_input=True)
 
+
     print(f"\nSubmitting {len(messages)} messages to OpenAI API...")
     print(f"Number of tokens: {n_input_tokens}")
     print(f"Estimated cost of input: {input_cost:3f} USD\n")
+
+    if n_input_tokens > MAX_TOKENS:
+        ValueError(f"Input tokens ({n_input_tokens}) exceed the maximum of {MAX_TOKENS}.")
 
     if verbose:
         print("\n-----------------------------------")
@@ -245,7 +249,6 @@ def main():
     output_text_list = output_message.split(DELIMITER)
 
 
-
     # check if output is the same length as input
     compare_text_blocks(text_list, output_text_list) 
 
@@ -269,6 +272,7 @@ if __name__ == "__main__":
     TOKEN_PRICE_LIST_PATH = "etc/openai_pricing_23Oct2024.yaml"
     MODEL_TYPE = "chat"
     DELIMITER = " &#&#&#& "
+    MAX_TOKENS = 5000
 
     TEST_INPUT = "Fiber Optics &#&#&#& Fiber optic systems consist of three main components: the optical fiber, a light source (transmitter), and a detector (receiver). &#&#&#& Hello! Is this printing?"
     TEST_OUTPUT = "Pluoštinė optika &#&#&#& Pluoštinės optikos sistemos susideda iš trijų pagrindinių komponentų: optinio pluošto, šviesos šaltinio (siuntėjo) ir detektoriaus (imtuvo). &#&#&#& Sveiki! Ar tai spausdinimas?"
