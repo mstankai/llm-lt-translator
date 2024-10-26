@@ -10,7 +10,7 @@ import sys
 import os
 
 
-def system_prompt(language):
+def system_prompt(language: str) -> str:
     return f"""
     You are a skilled {language} language translator. Your goal is to provide translations that are:
     Accurate: Convey the exact meaning of the original text, including idioms and cultural references.
@@ -23,7 +23,7 @@ def system_prompt(language):
     Please translate the following text from English to {language}, keeping the delimiter {DELIMITER} between the text blocks:
     """
 
-def output_exists(output_path):
+def output_exists(output_path: str) -> None:
     # check if output file exists, if it does, ask to confirm overwrite
     if os.path.exists(output_path):
         print(f"\nOutput file {output_path} already exists." )
@@ -34,14 +34,14 @@ def output_exists(output_path):
             sys.exit(0)
 
 
-def get_api_key(key_name):
+def get_api_key(key_name: str) -> str:
     api_key = keyring.get_password("system", key_name)
     if api_key is None:
         raise ValueError("API key not found in Keychain!")
     return api_key
 
 
-def read_docx(file_path):
+def read_docx(file_path: str) -> tuple:
     
     doc = Document(file_path)
 
@@ -65,7 +65,7 @@ def read_docx(file_path):
 
     return texts, formats
 
-def write_docx(output_path, texts, formats):
+def write_docx(output_path:str, texts: list, formats: list) -> None:
     
     doc = Document()
     
@@ -86,10 +86,8 @@ def write_docx(output_path, texts, formats):
     doc.save(output_path)
     print(f"Output saved to {output_path}")
 
-    return
 
-
-def get_number_of_tokens(messages, model_name):
+def get_number_of_tokens(messages: list, model_name: str) -> int:
 
     # get tokenizer encoding
     encoding = tiktoken.encoding_for_model(model_name)
@@ -103,8 +101,14 @@ def get_number_of_tokens(messages, model_name):
 
     return token_count
 
-def get_cost_of_tokens(n_tokens, model_name, price_list, is_input=True):
-    
+
+def get_cost_of_tokens(
+        n_tokens: int,
+        model_name: str, 
+        price_list: dict, 
+        is_input: bool = True
+    ) -> float:
+
     # get pice list keys for model
     model_group = MODEL_TYPE + "_models"
     token_type = "input_tokens" if is_input else "output_tokens"
@@ -114,7 +118,7 @@ def get_cost_of_tokens(n_tokens, model_name, price_list, is_input=True):
 
     return cost    
 
-def get_completion(client, messages, model_name):
+def get_completion(client: OpenAI, messages: list, model_name: str) -> str:
     
     completion_input = dict(
         model=model_name,
@@ -125,7 +129,7 @@ def get_completion(client, messages, model_name):
     return completion.choices[0]
 
 
-def compare_text_blocks(input_text_list, output_text_list):
+def compare_text_blocks(input_text_list: list, output_text_list: list) -> None:
     l_in = len(input_text_list)
     l_out = len(output_text_list)
 
@@ -148,7 +152,7 @@ def compare_text_blocks(input_text_list, output_text_list):
         print("Continuing...")
 
 
-def print_text_block_comparison(input_text_list, output_text_list):
+def print_text_block_comparison(input_text_list: list, output_text_list: list) -> None:
     l_in = len(input_text_list)
     l_out = len(output_text_list)
     i_max = max(l_in, l_out)
@@ -163,7 +167,7 @@ def print_text_block_comparison(input_text_list, output_text_list):
 
 
 # ------------------------------------------
-def main():
+def main() -> None:
 
     # get price list and available models
     with open(TOKEN_PRICE_LIST_PATH, 'r') as f:

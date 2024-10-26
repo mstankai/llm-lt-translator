@@ -1,0 +1,48 @@
+# for latest versions and other hooks see
+# https://pre-commit.com/hooks.html
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-merge-conflict
+      - id: check-yaml
+      - id: check-added-large-files
+
+  - repo: https://github.com/psf/black
+    rev: 24.10.0
+    hooks:
+      - id: black
+        language_version: python3
+
+  - repo: https://github.com/PyCQA/flake8
+    rev: 7.1.0
+    hooks:
+      - id: flake8
+        args: [--max-line-length=88]
+        additional_dependencies: ["flake8-docstrings"]
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.13.0
+    hooks:
+      - id: mypy
+        args: [--ignore-missing-imports]
+
+  - repo: local
+    hooks:
+      - id: docx-lint
+        name: Ensure No Large Docx Files
+        entry: bash -c '[ $(wc -c < "$1") -le 5242880 ] || (echo "Error: Large DOCX file"; exit 1)'
+        language: system
+        files: \.docx$
+        description: Prevents committing DOCX files larger than 5MB.
+
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        name: isort (python)
+        args: ["--profile", "black"]
+        description: Sorts imports
