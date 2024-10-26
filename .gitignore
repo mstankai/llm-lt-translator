@@ -6,3 +6,5 @@ activate
 
 # files
 files/**
+!files/doc_example.docx
+output/**
