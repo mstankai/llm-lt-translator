@@ -1,6 +1,6 @@
 # LLM based Lithuanian language translator
 
-A document translator from English to Lithuanian (or other languages).   
+A document translator from English to Lithuanian (or other languages).
 Based on OpenAI's API.
 
 ## Table of Contents
@@ -13,16 +13,16 @@ Based on OpenAI's API.
 - [License](#license)
 
 ## About
-The translator reads DOCX files, translates the content while _atempting_ to preserve formatting, 
-and outputs the translated text in a new DOCX file.   
+The translator reads DOCX files, translates the content while _atempting_ to preserve formatting,
+and outputs the translated text in a new DOCX file.
 
-The formatting preservation is not working great the moment, 
-but I may be limited in what I can _easily_ do, by the capabilities of the `python-docx` library.   
+The formatting preservation is not working great the moment,
+but I may be limited in what I can _easily_ do, by the capabilities of the `python-docx` library.
 
-The user can select the output language, but in the future, 
+The user can select the output language, but in the future,
 the app will be optimised for translations between English and Lithuanian.
 
-This code is primarily written to support my family with translations, 
+This code is primarily written to support my family with translations,
 so I will be prioritising functionalities that would be useful to them.
 
 
@@ -47,11 +47,11 @@ so I will be prioritising functionalities that would be useful to them.
 
 1. **Set up OpenAI API key:**
     You can set up an API key on the Open AI Platform page, here: [OpenAI Platform | API Keys](https://platform.openai.com/api-keys).
-    
+
     Store your OpenAI API key in your system's keychain using the following command:
-    ```sh 
+    ```sh
     python -c 'import keyring; keyring.set_password("system", "openai_api_key", "<your-api-key>")'
-    ```sh 
+    ```sh
 
 
 ## Usage
@@ -64,7 +64,7 @@ python doc_translator.py <input-file> [-o <output-file>] [-m <model>] [-l <langu
 
 
 ## Cool insights
-- Given that the tokenizer embedings were likely not trained on the lithuanian language, lithuanian text, on averge, has more tokens than in english. 
+- Given that the tokenizer embedings were likely not trained on the lithuanian language, lithuanian text, on averge, has more tokens than in english.
 
 ## Future TO DO's and Ideas
 

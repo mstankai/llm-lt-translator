@@ -1,7 +1,7 @@
 ## Description
 
-Please provide a brief description of the changes in this PR, 
-including the purpose of the changes, any specific issues or features it addresses, 
+Please provide a brief description of the changes in this PR,
+including the purpose of the changes, any specific issues or features it addresses,
 and why it may be beneficial to the project.
 
 ---
@@ -18,7 +18,7 @@ and why it may be beneficial to the project.
 
 ## Related Issue
 
-Link to any relevant issues or discussions (if any):  
+Link to any relevant issues or discussions (if any):
 Fixes #(issue_number)
 
 ---

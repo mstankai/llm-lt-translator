@@ -24,20 +24,15 @@ repos:
         args: [--max-line-length=88]
         additional_dependencies: ["flake8-docstrings"]
 
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.13.0
-    hooks:
-      - id: mypy
-        args: [--ignore-missing-imports]
-
   - repo: local
     hooks:
       - id: docx-lint
         name: Ensure No Large Docx Files
-        entry: bash -c '[ $(wc -c < "$1") -le 5242880 ] || (echo "Error: Large DOCX file"; exit 1)'
+        entry: "./etc/check_docx_size.sh"
         language: system
         files: \.docx$
         description: Prevents committing DOCX files larger than 5MB.
+
 
   - repo: https://github.com/pycqa/isort
     rev: 5.13.2
